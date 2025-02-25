@@ -36,3 +36,8 @@ def process_input():
 
     print("Content-type: text/html\n") # Required header
     print("<html><body><h2>Data Submitted!</h2><a href='index.html'>Go Back</a></body></html>")
+
+
+if __name__ == "__main__":
+    if not os.path.exists("polling_data.db"): # If the database does not exist, initialize it
+        initialize_db()
