@@ -43,6 +43,15 @@ if __name__ == "__main__":
         initialize_db()
     process_input() # Process the form data and insert it into the database
 
+
+
+# INSTRUCTIONS:
+
 # python -m http.server 8080 --cgi
+# Browse to --> http://localhost:8080/form.html
+# Fill out the form and submit
+# Use DBBrowser to view the data in the database
+
+
 # To run local server so that the form can be submitted
 
