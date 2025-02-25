@@ -41,3 +41,8 @@ def process_input():
 if __name__ == "__main__":
     if not os.path.exists("polling_data.db"): # If the database does not exist, initialize it
         initialize_db()
+    process_input() # Process the form data and insert it into the database
+
+# python -m http.server 8080 --cgi
+# To run local server so that the form can be submitted
+
