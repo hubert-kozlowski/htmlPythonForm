@@ -95,3 +95,8 @@ if __name__ == "__main__":
 
 # To run local server so that the form can be submitted
 
+
+
+
+# Also now thinking, why the fuck have I been thinking in python... we can just connect to a database.. like a csv or anything...... with javascript and do it like that highkeybikekey bro.
+
