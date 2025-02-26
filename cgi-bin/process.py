@@ -1,6 +1,8 @@
 import sqlite3 # Will be used to connect to the database
 import cgi # Will be used to parse the form data from the HTML
 import os 
+import pandas as pd
+import plotly.express as px
 
 def initialize_db():
     """
@@ -38,10 +40,49 @@ def process_input():
     print("<html><body><h2>Data Submitted!</h2><a href='index.html'>Go Back</a></body></html>")
 
 
+
+def display_data():
+    """
+    This function displays the data in the database and generates visualizations.
+    """
+    conn = sqlite3.connect('polling_data.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM crimes')
+    rows = c.fetchall()
+    conn.close()
+
+    # Convert the data to a pandas DataFrame
+    df = pd.DataFrame(rows, columns=['ID', 'Crime Type', 'Crime Count', 'Feeling Safe'])
+
+    # Create a bar chart for crime counts
+    fig = px.bar(df, x='Crime Type', y='Crime Count', title='Crime Counts by Type')
+    fig.write_html("static/crime_counts.html")
+
+    # Create a bar chart for feeling safe
+    fig2 = px.bar(df, x='Crime Type', y=df['Feeling Safe'].astype(str), title='Feeling Safe by Crime Type')
+    fig2.write_html("static/feeling_safe.html")
+    # Display the data and charts
+    print("Content-type: text/html\n") # Required header
+    print("<html><body><h2>Data in the Database</h2>")
+    print("<table border='1'><tr><th>ID</th><th>Crime Type</th><th>Crime Count</th><th>Feeling Safe</th></tr>")
+    for row in rows:
+        print("<tr>")
+        for col in row:
+            print("<td>{}</td>".format(col))
+        print("</tr>")
+    print("</table>")
+    print("<h2>Crime Counts by Type</h2>")
+    print("<embed src='/static/crime_counts.html' width='600' height='400'></iframe>")
+    print("<h2>Feeling Safe by Crime Type</h2>")
+    print("<embed src='/static/feeling_safe.html' width='600' height='400'></iframe>")
+    print("</body></html>")
+
+
 if __name__ == "__main__":
     if not os.path.exists("polling_data.db"): # If the database does not exist, initialize it
         initialize_db()
     process_input() # Process the form data and insert it into the database
+    display_data() # Display the data in the database
 
 
 
@@ -51,7 +92,6 @@ if __name__ == "__main__":
 # Browse to --> http://localhost:8080/form.html
 # Fill out the form and submit
 # Use DBBrowser to view the data in the database
-
 
 # To run local server so that the form can be submitted
 
