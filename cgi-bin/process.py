@@ -63,19 +63,59 @@ def display_data():
     fig2.write_html("static/feeling_safe.html")
     # Display the data and charts
     print("Content-type: text/html\n") # Required header
-    print("<html><body><h2>Data in the Database</h2>")
-    print("<table border='1'><tr><th>ID</th><th>Crime Type</th><th>Crime Count</th><th>Feeling Safe</th></tr>")
+    print("""
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+            }
+            h2 {
+                color: #333;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+            th, td {
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            embed {
+                display: block;
+                margin: 20px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Data in the Database</h2>
+        <table>
+            <tr><th>ID</th><th>Crime Type</th><th>Crime Count</th><th>Feeling Safe</th></tr>""")
     for row in rows:
         print("<tr>")
         for col in row:
             print("<td>{}</td>".format(col))
         print("</tr>")
-    print("</table>")
-    print("<h2>Crime Counts by Type</h2>")
-    print("<embed src='/static/crime_counts.html' width='600' height='400'></iframe>")
-    print("<h2>Feeling Safe by Crime Type</h2>")
-    print("<embed src='/static/feeling_safe.html' width='600' height='400'></iframe>")
-    print("</body></html>")
+    print("""
+        </table>
+        <h2>Crime Counts by Type</h2>
+        <embed src='/static/crime_counts.html' width='600' height='400'></embed>
+        <h2>Feeling Safe by Crime Type</h2>
+        <embed src='/static/feeling_safe.html' width='600' height='400'></embed>
+    </body>
+    </html>
+    """)
 
 
 if __name__ == "__main__":
